@@ -328,26 +328,6 @@ java Adoptame
 
 **Nota:** Es importante mantener ambos archivos en el mismo directorio para que `Adoptame.java` pueda utilizar la clase `BaseDatos`.
 
----
-
-## 📸 Interfaz del sistema
-
-En esta sección se pueden incorporar capturas de pantalla de las principales funcionalidades.
-
-Se recomienda agregar imágenes de:
-
-1. Pantalla de inicio de sesión.
-2. Catálogo principal.
-3. Filtros de búsqueda.
-4. Ficha individual de un animal.
-5. Módulo de gestión.
-6. Formulario de registro y modificación.
-
-Para agregar una captura al README, primero sube la imagen al repositorio y utiliza:
-
-```markdown
-![Pantalla principal](imagenes/catalogo.png)
-```
 
 ---
 
@@ -374,24 +354,6 @@ El proyecto corresponde a un prototipo funcional de escritorio y presenta alguna
 - Agregar un módulo para registrar solicitudes de adopción.
 - Implementar mapas de veterinarias, refugios y tiendas de mascotas.
 - Incorporar un sistema de seguimiento del proceso de adopción.
-
----
-
-## 📚 Aprendizajes obtenidos
-
-Durante el desarrollo de ADÓPTAME se aplicaron conocimientos de:
-
-- Programación orientada a objetos.
-- Creación y utilización de clases y objetos.
-- Encapsulamiento y organización del código.
-- Manejo de colecciones mediante `ArrayList`.
-- Uso de mapas mediante `HashMap`.
-- Implementación de operaciones CRUD.
-- Desarrollo de interfaces gráficas con Java Swing.
-- Manejo de eventos y componentes gráficos.
-- Validación de datos.
-- Separación de responsabilidades entre archivos.
-- Organización y documentación de proyectos mediante GitHub.
 
 ---
 
