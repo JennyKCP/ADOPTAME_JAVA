@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.text.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,13 +17,15 @@ import java.util.stream.Collectors;
  * Aplicación de escritorio desarrollada con Java Swing.
  * Credenciales de demostración: admin / admin123
  */
+
 public class Adoptame extends JFrame {
+
     // Paleta suave: marfil, salvia y verde bosque.
     private static final Color FONDO = new Color(246, 247, 242);
     private static final Color PANEL = new Color(255, 254, 250);
     private static final Color CAFE = new Color(218, 229, 216);       // Botón principal
     private static final Color CAFE_OSCURO = new Color(53, 73, 60);  // Encabezados
-    private static final Color TEXTO = new Color(43, 51, 45);
+	private static final Color TEXTO = new Color(43, 51, 45);
     private static final Color BLANCO = new Color(255, 255, 255);
     private static final Color ARENA = new Color(235, 238, 229);
     private static final Color VERDE = new Color(73, 112, 80);
@@ -41,6 +44,7 @@ public class Adoptame extends JFrame {
     private JLabel lblConteo;
 
     public Adoptame() {
+
         setTitle("ADÓPTAME | Encuentra un nuevo amigo");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setMinimumSize(new Dimension(900, 650));
@@ -57,6 +61,7 @@ public class Adoptame extends JFrame {
     }
 
     // --------------------------- MODELO ---------------------------
+
     static class Animal {
         int id;
         String nombre, especie, raza, tamano, caracteristicas, salud, disponibilidad, rutaImagen;
@@ -64,7 +69,8 @@ public class Adoptame extends JFrame {
 
         Animal(int id, String nombre, String especie, String raza, int edad,
                String tamano, String caracteristicas, String salud,
-               String disponibilidad, String rutaImagen) {
+				String disponibilidad, String rutaImagen) {
+				
             this.id = id;
             this.nombre = nombre;
             this.especie = especie;
@@ -83,6 +89,7 @@ public class Adoptame extends JFrame {
         for (Animal a : animales) {
             indiceAnimales.put(a.id, a);
         }
+
         siguienteId = animales.size() + 1;
     }
 
@@ -96,6 +103,7 @@ public class Adoptame extends JFrame {
     }
 
     // --------------------------- LOGIN ---------------------------
+
     private JPanel crearLogin() {
         JPanel fondo = new JPanel(new GridBagLayout());
         fondo.setBackground(FONDO);
@@ -185,6 +193,7 @@ public class Adoptame extends JFrame {
     }
 
     // --------------------------- INICIO / GALERÍA ---------------------------
+
     private JPanel crearInicio() {
         JPanel pagina = new JPanel(new BorderLayout());
         pagina.setBackground(FONDO);
@@ -216,6 +225,7 @@ public class Adoptame extends JFrame {
         JLabel descripcion = new JLabel("Conoce a los animalitos que esperan una familia.");
         descripcion.setFont(new Font("SansSerif", Font.PLAIN, 14));
         descripcion.setForeground(TEXTO_SUAVE);
+
         JPanel titulos = new JPanel(new GridLayout(2, 1, 0, 3));
         titulos.setOpaque(false);
         titulos.add(titulo);
@@ -236,7 +246,10 @@ public class Adoptame extends JFrame {
                 new LineBorder(BORDE, 1, true),
                 new EmptyBorder(8, 10, 8, 10)));
         filtros.add(txtBuscar); filtros.add(cbEspecie); filtros.add(cbDisponibilidad);
-        filtros.add(cbOrden); filtros.add(buscar); filtros.add(limpiar);
+		filtros.add(cbOrden);
+		filtros.add(buscar);
+		filtros.add(limpiar);
+		
         JPanel arriba = new JPanel(new BorderLayout(0, 14));
         arriba.setOpaque(false);
         arriba.add(titulos, BorderLayout.NORTH);
@@ -244,7 +257,8 @@ public class Adoptame extends JFrame {
 
         panelTarjetas = new JPanel(new GridLayout(0, 3, 18, 18));
         panelTarjetas.setOpaque(false);
-        panelTarjetas.setBorder(new EmptyBorder(10, 4, 16, 4));
+		panelTarjetas.setBorder(new EmptyBorder(10, 4, 16, 4));
+		
         JScrollPane scroll = new JScrollPane(panelTarjetas);
         scroll.setBorder(BorderFactory.createEmptyBorder());
         scroll.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
@@ -271,6 +285,7 @@ public class Adoptame extends JFrame {
             cbDisponibilidad.setSelectedIndex(0); cbOrden.setSelectedIndex(0);
             actualizarGaleria();
         });
+
         administrar.addActionListener(e -> abrirGestion());
         salir.addActionListener(e -> cardLayout.show(contenedorPrincipal, "LOGIN"));
         return pagina;
@@ -292,6 +307,7 @@ public class Adoptame extends JFrame {
                     || a.salud.toLowerCase().contains(texto)
                     || a.disponibilidad.toLowerCase().contains(texto)
                     || String.valueOf(a.edad).contains(texto);
+
             boolean coincideEspecie = especie.equals("Todas las especies") || a.especie.equalsIgnoreCase(especie);
             boolean coincideEstado = estado.equals("Todos los estados") || a.disponibilidad.equalsIgnoreCase(estado);
             return coincideTexto && coincideEspecie && coincideEstado;
@@ -316,6 +332,7 @@ public class Adoptame extends JFrame {
         } else {
             panelTarjetas.setLayout(new GridLayout(0, 3, 18, 18));
         }
+
         lblConteo.setText("Mostrando " + lista.size() + " de " + animales.size() + " animales");
         panelTarjetas.revalidate(); panelTarjetas.repaint();
     }
@@ -346,15 +363,18 @@ public class Adoptame extends JFrame {
         JLabel datos = new JLabel(a.especie + " · " + a.raza + " · " + a.edad + " año(s)");
         datos.setFont(new Font("SansSerif", Font.PLAIN, 12));
         datos.setForeground(TEXTO_SUAVE);
+
         JLabel estado = new JLabel(a.disponibilidad.toUpperCase());
         estado.setFont(new Font("SansSerif", Font.BOLD, 10));
-        estado.setForeground(a.disponibilidad.equals("Disponible") ? VERDE : CAFE_OSCURO);
-        JButton ver = botonSecundario("Ver ficha");
+		estado.setForeground(a.disponibilidad.equals("Disponible") ? VERDE : CAFE_OSCURO);
+        
+		JButton ver = botonSecundario("Ver ficha");
         ver.addActionListener(e -> mostrarFicha(a));
 
         JPanel info = new JPanel(new GridLayout(3, 1, 0, 6));
         info.setOpaque(false);
         info.add(nombre); info.add(datos); info.add(estado);
+
         tarjeta.add(foto, BorderLayout.NORTH);
         tarjeta.add(info, BorderLayout.CENTER);
         tarjeta.add(ver, BorderLayout.SOUTH);
@@ -365,9 +385,11 @@ public class Adoptame extends JFrame {
         JPanel contenido = new JPanel(new BorderLayout(14, 10));
         contenido.setBackground(PANEL);
         contenido.setBorder(new EmptyBorder(12, 12, 12, 12));
+
         JLabel imagen = new JLabel(cargarImagen(a.rutaImagen, 230, 210));
         imagen.setPreferredSize(new Dimension(230, 210));
         imagen.setHorizontalAlignment(SwingConstants.CENTER);
+
         JPanel datos = new JPanel(new GridLayout(0, 1, 0, 7));
         datos.setBackground(PANEL);
         datos.setBorder(new EmptyBorder(4, 4, 4, 4));
@@ -400,6 +422,7 @@ public class Adoptame extends JFrame {
     }
 
     // --------------------------- CRUD / GESTIÓN ---------------------------
+
     private void abrirGestion() {
         JDialog dialogo = new JDialog(this, "Gestión de animales", true);
         dialogo.setSize(1120, 700);
@@ -413,10 +436,20 @@ public class Adoptame extends JFrame {
         titulo.setForeground(TEXTO);
         titulo.setBorder(new EmptyBorder(20, 22, 12, 22));
 
+        JButton ampliar = botonSecundario("Ampliar vista");
+        JPanel encabezadoGestion = new JPanel(new BorderLayout());
+        encabezadoGestion.setOpaque(false);
+        encabezadoGestion.add(titulo, BorderLayout.WEST);
+        JPanel panelAmpliar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 18, 18));
+        panelAmpliar.setOpaque(false);
+        panelAmpliar.add(ampliar);
+        encabezadoGestion.add(panelAmpliar, BorderLayout.EAST);
+
         String[] columnas = {"ID", "Nombre", "Especie", "Raza", "Edad", "Tamaño", "Salud", "Disponibilidad"};
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0) {
             public boolean isCellEditable(int r, int c) { return false; }
         };
+
         JTable tabla = new JTable(modelo);
         tabla.setRowHeight(34);
         tabla.setFont(new Font("SansSerif", Font.PLAIN, 12));
@@ -433,6 +466,7 @@ public class Adoptame extends JFrame {
         tabla.getTableHeader().setBackground(ARENA);
         tabla.getTableHeader().setForeground(CAFE_OSCURO);
         tabla.getTableHeader().setPreferredSize(new Dimension(0, 38));
+
         JScrollPane scroll = new JScrollPane(tabla);
         scroll.setBorder(BorderFactory.createCompoundBorder(
                 new LineBorder(BORDE, 1, true),
@@ -440,8 +474,19 @@ public class Adoptame extends JFrame {
 
         JTextField nombre = campoGestion(), especie = campoGestion(), raza = campoGestion(), edad = campoGestion();
         JTextField tamano = campoGestion(), caracteristicas = campoGestion(), salud = campoGestion();
+
+        // Restricciones de entrada para evitar datos incorrectos.
+        instalarFiltro(nombre, false);
+        instalarFiltro(especie, false);
+        instalarFiltro(raza, false);
+        instalarFiltro(edad, true);
+        instalarFiltro(tamano, false);
+        instalarFiltro(caracteristicas, false);
+        instalarFiltro(salud, false);
+
         JComboBox<String> disponibilidad = new JComboBox<>(new String[]{"Disponible", "Adoptado", "En observación"});
         estilizarCombo(disponibilidad);
+
         JLabel archivo = new JLabel("Sin imagen seleccionada");
         archivo.setFont(new Font("SansSerif", Font.PLAIN, 11));
         archivo.setForeground(TEXTO_SUAVE);
@@ -482,18 +527,35 @@ public class Adoptame extends JFrame {
         centro.setBorder(new EmptyBorder(0, 12, 12, 12));
         centro.add(formulario, BorderLayout.WEST);
         centro.add(scroll, BorderLayout.CENTER);
-        dialogo.add(titulo, BorderLayout.NORTH);
+        dialogo.add(encabezadoGestion, BorderLayout.NORTH);
         dialogo.add(centro, BorderLayout.CENTER);
+
+        final Rectangle[] tamanoAnterior = {null};
+        ampliar.addActionListener(e -> {
+            if (tamanoAnterior[0] == null) {
+                tamanoAnterior[0] = dialogo.getBounds();
+                Rectangle pantalla = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                        .getMaximumWindowBounds();
+                dialogo.setBounds(pantalla);
+                ampliar.setText("Restaurar vista");
+            } else {
+                dialogo.setBounds(tamanoAnterior[0]);
+                tamanoAnterior[0] = null;
+                ampliar.setText("Ampliar vista");
+            }
+        });
 
         Runnable refrescar = () -> {
             modelo.setRowCount(0);
             for (Animal a : animales) modelo.addRow(new Object[]{a.id, a.nombre, a.especie, a.raza, a.edad, a.tamano, a.salud, a.disponibilidad});
         };
+
         Runnable limpiarFormulario = () -> {
             nombre.setText(""); especie.setText(""); raza.setText(""); edad.setText(""); tamano.setText("");
             caracteristicas.setText(""); salud.setText(""); disponibilidad.setSelectedIndex(0);
             ruta[0] = null; archivo.setText("Sin imagen seleccionada"); idActual[0] = -1; tabla.clearSelection();
         };
+
         elegirImagen.addActionListener(e -> {
             JFileChooser chooser = new JFileChooser();
             chooser.setDialogTitle("Seleccionar fotografía del animal");
@@ -503,18 +565,28 @@ public class Adoptame extends JFrame {
                 archivo.setText(chooser.getSelectedFile().getName());
             }
         });
+
         tabla.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && tabla.getSelectedRow() >= 0) {
                 int id = Integer.parseInt(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
                 Animal a = indiceAnimales.get(id);
                 if (a != null) {
-                    idActual[0] = id; nombre.setText(a.nombre); especie.setText(a.especie); raza.setText(a.raza);
-                    edad.setText(String.valueOf(a.edad)); tamano.setText(a.tamano); caracteristicas.setText(a.caracteristicas);
-                    salud.setText(a.salud); disponibilidad.setSelectedItem(a.disponibilidad); ruta[0] = a.rutaImagen;
+                    idActual[0] = id;
+                    ponerTextoSinFiltro(nombre, a.nombre);
+                    ponerTextoSinFiltro(especie, a.especie);
+                    ponerTextoSinFiltro(raza, a.raza);
+                    ponerTextoSinFiltro(edad, String.valueOf(a.edad));
+                    ponerTextoSinFiltro(tamano, a.tamano);
+                    ponerTextoSinFiltro(caracteristicas, a.caracteristicas);
+                    ponerTextoSinFiltro(salud, a.salud);
+                    disponibilidad.setSelectedItem(a.disponibilidad);
+                    ruta[0] = a.rutaImagen;
+
                     archivo.setText(ruta[0] == null ? "Sin imagen seleccionada" : new File(ruta[0]).getName());
                 }
             }
         });
+
         registrar.addActionListener(e -> {
             Animal nuevo = validarFormulario(nombre, especie, raza, edad, tamano, caracteristicas, salud, disponibilidad, ruta[0]);
             if (nuevo == null) return;
@@ -522,6 +594,7 @@ public class Adoptame extends JFrame {
             refrescar.run(); limpiarFormulario.run(); actualizarGaleria();
             JOptionPane.showMessageDialog(dialogo, "Animal registrado correctamente.");
         });
+
         modificar.addActionListener(e -> {
             if (idActual[0] == -1) { JOptionPane.showMessageDialog(dialogo, "Seleccione un animal de la tabla."); return; }
             Animal datos = validarFormulario(nombre, especie, raza, edad, tamano, caracteristicas, salud, disponibilidad, ruta[0]);
@@ -533,6 +606,7 @@ public class Adoptame extends JFrame {
             refrescar.run(); limpiarFormulario.run(); actualizarGaleria();
             JOptionPane.showMessageDialog(dialogo, "Animal modificado correctamente.");
         });
+
         eliminar.addActionListener(e -> {
             if (idActual[0] == -1) { JOptionPane.showMessageDialog(dialogo, "Seleccione un animal de la tabla."); return; }
             int confirmar = JOptionPane.showConfirmDialog(dialogo, "¿Está seguro de eliminar este registro?", "Confirmar eliminación", JOptionPane.YES_NO_OPTION);
@@ -542,6 +616,7 @@ public class Adoptame extends JFrame {
                 JOptionPane.showMessageDialog(dialogo, "Animal eliminado correctamente.");
             }
         });
+
         limpiar.addActionListener(e -> limpiarFormulario.run());
         refrescar.run();
         dialogo.setVisible(true);
@@ -555,6 +630,21 @@ public class Adoptame extends JFrame {
         if (n.isEmpty() || es.isEmpty() || r.isEmpty() || ed.isEmpty() || t.isEmpty() || s.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Complete los campos obligatorios: nombre, especie, raza, edad, tamaño y salud."); return null;
         }
+        if (!soloLetras(n) || !soloLetras(es) || !soloLetras(r) || !soloLetras(t)
+				|| !soloLetras(c) || !soloLetras(s)) {
+
+			JOptionPane.showMessageDialog(this,
+					"Nombre, especie, raza, tamaño, características y salud deben contener letras, no números.",
+					"Dato inválido", JOptionPane.WARNING_MESSAGE);
+			return null;
+		}
+		
+        if (!ed.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(this, "La edad solo debe contener números.",
+                    "Edad inválida", JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+
         try {
             int anios = Integer.parseInt(ed);
             if (anios < 0 || anios > 100) throw new NumberFormatException();
@@ -564,15 +654,72 @@ public class Adoptame extends JFrame {
         }
     }
 
+    // --------------------------- VALIDACIÓN DE CAMPOS ---------------------------
+
+    private static boolean soloLetras(String texto) {
+        return texto.matches("[\\p{L}\\s.,;:'()\\-]+");
+    }
+
+    private void instalarFiltro(JTextField campo, boolean soloNumeros) {
+        ((AbstractDocument) campo.getDocument()).setDocumentFilter(new DocumentFilter() {
+            private boolean valido(String texto) {
+                if (soloNumeros) return texto.matches("[0-9]*");
+                return texto.matches("[\\p{L}\\s.,;:'()\\-]*");
+            }
+
+            private void avisar() {
+                Toolkit.getDefaultToolkit().beep();
+                JOptionPane.showMessageDialog(Adoptame.this,
+                        soloNumeros ? "Este campo solo admite números."
+                                : "Este campo solo admite letras. No se permiten números.",
+                        "Entrada no válida", JOptionPane.WARNING_MESSAGE);
+            }
+
+            @Override
+            public void insertString(FilterBypass fb, int offset, String texto, AttributeSet attrs)
+                    throws BadLocationException {
+                if (texto == null) return;
+                String actual = fb.getDocument().getText(0, fb.getDocument().getLength());
+                String nuevo = actual.substring(0, offset) + texto + actual.substring(offset);
+                if (valido(nuevo)) super.insertString(fb, offset, texto, attrs);
+                else avisar();
+            }
+
+            @Override
+            public void replace(FilterBypass fb, int offset, int length, String texto, AttributeSet attrs)
+                    throws BadLocationException {
+                if (texto == null) texto = "";
+                String actual = fb.getDocument().getText(0, fb.getDocument().getLength());
+                String nuevo = actual.substring(0, offset) + texto
+                        + actual.substring(offset + length);
+                if (valido(nuevo)) super.replace(fb, offset, length, texto, attrs);
+                else avisar();
+            }
+        });
+    }
+
+    private void ponerTextoSinFiltro(JTextField campo, String texto) {
+        AbstractDocument documento = (AbstractDocument) campo.getDocument();
+        DocumentFilter filtro = documento.getDocumentFilter();
+        documento.setDocumentFilter(null);
+        campo.setText(texto == null ? "" : texto);
+        documento.setDocumentFilter(filtro);
+    }
+
     // --------------------------- COMPONENTES / ESTILOS ---------------------------
+
     private JLabel etiquetaCampo(String texto) {
         JLabel l = new JLabel(texto); l.setFont(new Font("SansSerif", Font.PLAIN, 11)); l.setForeground(TEXTO); return l;
+
     }
+
     private JTextField campoGestion() { JTextField t = new JTextField(16); estilizarCampo(t); return t; }
     private void agregarCampo(JPanel p, GridBagConstraints g, int fila, String titulo, JComponent campo) {
         g.gridx = 0; g.gridy = fila * 2; g.gridwidth = 2; p.add(etiquetaCampo(titulo), g);
         g.gridy = fila * 2 + 1; p.add(campo, g);
+
     }
+
     private void estilizarCampo(JTextField campo) {
         campo.setFont(new Font("SansSerif", Font.PLAIN, 13));
         campo.setForeground(TEXTO); campo.setBackground(PANEL);
@@ -585,11 +732,13 @@ public class Adoptame extends JFrame {
         campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
         campo.setPreferredSize(new Dimension(220, 36));
     }
+
     private void estilizarCombo(JComboBox<?> combo) {
         combo.setFont(new Font("SansSerif", Font.PLAIN, 12)); combo.setBackground(BLANCO); combo.setForeground(TEXTO);
         combo.setPreferredSize(new Dimension(155, 38));
         combo.setBorder(BorderFactory.createCompoundBorder(new LineBorder(BORDE, 1, true), new EmptyBorder(3, 7, 3, 7)));
     }
+
     private JButton botonPrincipal(String texto) {
         JButton b = new JButton(texto);
         configurarBoton(b, CAFE, new Color(202, 218, 202), CAFE_OSCURO, 12);
@@ -614,6 +763,7 @@ public class Adoptame extends JFrame {
     }
 
     // BasicButtonUI evita que el tema de Windows reemplace los colores definidos.
+
     private void configurarBoton(JButton b, Color fondo, Color hover, Color texto, int tamano) {
         b.setUI(new BasicButtonUI());
         b.setFont(new Font("SansSerif", Font.BOLD, tamano));
@@ -641,7 +791,9 @@ public class Adoptame extends JFrame {
                 return new ImageIcon(escalada);
             }
         }
+
         // Imagen de reemplazo cuando todavía no se ha asociado una fotografía.
+
         BufferedImage imagen = new BufferedImage(ancho, alto, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = imagen.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
